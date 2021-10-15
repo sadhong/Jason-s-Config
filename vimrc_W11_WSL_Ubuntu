@@ -1,0 +1,54 @@
+set nocompatible
+set autoread
+set magic
+
+set encoding=utf-8
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,euc-jp,euc-kr,latin1
+set fileformats=unix,dos,mac
+set termencoding=utf-8
+set formatoptions+=m
+set formatoptions+=B
+
+set ruler
+set number
+set nowrap
+set showcmd
+set showmode
+set showmatch
+set matchtime=2
+
+set hlsearch
+set incsearch
+set ignorecase
+set smartcase
+
+set expandtab
+set smarttab
+
+set autoindent smartindent shiftround
+set shiftwidth=4
+set tabstop=4
+set softtabstop=4
+
+set cursorcolumn
+set cursorline
+highlight CursorColumn cterm=NONE ctermbg=lightgray ctermfg=blue guibg=NONE guifg=NONE
+highlight CursorLine cterm=NONE ctermbg=lightgray ctermfg=blue guibg=NONE guifg=NONE
+
+filetype on 
+filetype plugin on
+filetype indent on
+
+autocmd FileType python set tabstop=4 shiftwidth=4 expandtab ai
+autocmd BufRead,BufNew *.md, *.mkd, *.markdown set filetype=markdown.mkd
+autocmd BufNewFile *.py exec ":call AutoSetFileHead()"
+    function! AutoSetFileHead()
+        if &filetype == 'python'
+            call setline(1, "\#!/usr/bin/env python")
+            call append(1, "\# encoding: utf-8")
+        endif
+
+        normal G
+        normal o
+        normal o
+    endfunc
